@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lintasan/Sirkuit Euler dan Hamilton</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .control-panel {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+        }
+
+        .control-panel h3 {
+            color: #495057;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 5px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #6c757d, #495057);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .canvas-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        #graphCanvas {
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            cursor: crosshair;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .results {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-section {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            background: #f8f9fa;
+        }
+
+        .result-section h4 {
+            color: #495057;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .result-content {
+            font-family: 'Courier New', monospace;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #dee2e6;
+            min-height: 40px;
+            white-space: pre-wrap;
+        }
+
+        .status {
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .matrix-display {
+            font-family: 'Courier New', monospace;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            overflow-x: auto;
+        }
+
+        .predefined-graphs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .controls, .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔗 Analisis Lintasan/Sirkuit Euler dan Hamilton</h1>
+            <p>Buat graph dan analisis lintasan/sirkuit Euler dan Hamilton</p>
+        </div>
+
+        <div class="controls">
+            <div class="control-panel">
+                <h3>🎯 Kontrol Graph</h3>
+                <div class="input-group">
+                    <label>Mode:</label>
+                    <select id="mode">
+                        <option value="add_vertex">Tambah Titik/Node (Vertex)</option>
+                        <option value="add_edge">Tambah Sisi (Edge)</option>
+                        <option value="remove">Hapus</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Jumlah Titik/Node:</label>
+                    <input type="number" id="numVertices" value="5" min="3" max="10">
+                </div>
+                <div class="predefined-graphs">
+                    <button class="btn btn-secondary" onclick="createCompleteGraph()">Graph Lengkap</button>
+                    <button class="btn btn-secondary" onclick="createCycleGraph()">Graph Bulat</button>
+                    <button class="btn btn-secondary" onclick="createPathGraph()">Graph Lintasan</button>
+                </div>
+                <div style="margin-top: 15px;">
+                    <button class="btn" onclick="generateRandomGraph()">🎲 Graph Acak</button>
+                    <button class="btn btn-danger" onclick="clearGraph()">🗑️ Hapus Semua Graph</button>
+                </div>
+            </div>
+
+            <div class="control-panel">
+                <h3>⚙️ Analisis</h3>
+                <button class="btn" onclick="analyzeGraph()" style="width: 100%; margin-bottom: 10px;">
+                    🔍 Analisis Graph
+                </button>
+                <button class="btn btn-secondary" onclick="showAdjacencyMatrix()" style="width: 100%; margin-bottom: 10px;">
+                    📊 Tampilkan Matrix
+                </button>
+                <button class="btn btn-secondary" onclick="animatePath()" style="width: 100%;">
+                    🎬 Animasi Lintasan
+                </button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="canvas-container">
+                <h3 style="text-align: center; margin-bottom: 15px; color: #495057;">📈 Visualisasi</h3>
+                <canvas id="graphCanvas" width="500" height="400"></canvas>
+                <div id="instructions" style="text-align: center; margin-top: 10px; color: #6c757d; font-size: 14px;">
+                    Klik untuk menambah vertex, klik dua vertex untuk menambah edge
+                </div>
+            </div>
+
+            <div class="results">
+                <h3 style="margin-bottom: 20px; color: #495057;">📋 Hasil Analisis</h3>
+                
+                <div class="result-section">
+                    <h4>🔄 Lintasan & Sirkuit Euler</h4>
+                    <div id="eulerStatus" class="status"></div>
+                    <div id="eulerResult" class="result-content"></div>
+                </div>
+
+                <div class="result-section">
+                    <h4>🏃‍♂️ Lintasan & Sirkuit Hamilton</h4>
+                    <div id="hamiltonStatus" class="status"></div>
+                    <div id="hamiltonResult" class="result-content"></div>
+                </div>
+
+                <div class="result-section">
+                    <h4>📊 Informasi Graph</h4>
+                    <div id="graphInfo" class="result-content"></div>
+                </div>
+
+                <div class="result-section">
+                    <h4>🔢 Pendekatan Matrix</h4>
+                    <div id="matrixDisplay" class="matrix-display"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class Graph {
+            constructor() {
+                this.vertices = new Map();
+                this.edges = [];
+                this.nextVertexId = 0;
+            }
+
+            addVertex(x, y, label = null) {
+                const id = label !== null ? label : this.nextVertexId++;
+                this.vertices.set(id, { x, y, id, label: id.toString() });
+                return id;
+            }
+
+            addEdge(v1, v2) {
+                if (this.vertices.has(v1) && this.vertices.has(v2) && v1 !== v2) {
+                    const exists = this.edges.some(edge => 
+                        (edge.v1 === v1 && edge.v2 === v2) || 
+                        (edge.v1 === v2 && edge.v2 === v1)
+                    );
+                    if (!exists) {
+                        this.edges.push({ v1, v2 });
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            removeVertex(id) {
+                this.vertices.delete(id);
+                this.edges = this.edges.filter(edge => edge.v1 !== id && edge.v2 !== id);
+            }
+
+            removeEdge(v1, v2) {
+                this.edges = this.edges.filter(edge => 
+                    !((edge.v1 === v1 && edge.v2 === v2) || 
+                      (edge.v1 === v2 && edge.v2 === v1))
+                );
+            }
+
+            getAdjacencyList() {
+                const adj = new Map();
+                for (let vertex of this.vertices.keys()) {
+                    adj.set(vertex, []);
+                }
+                for (let edge of this.edges) {
+                    adj.get(edge.v1).push(edge.v2);
+                    adj.get(edge.v2).push(edge.v1);
+                }
+                return adj;
+            }
+
+            getDegree(vertex) {
+                return this.edges.filter(edge => edge.v1 === vertex || edge.v2 === vertex).length;
+            }
+
+            clear() {
+                this.vertices.clear();
+                this.edges = [];
+                this.nextVertexId = 0;
+            }
+        }
+
+        class GraphAnalyzer {
+            constructor(graph) {
+                this.graph = graph;
+            }
+
+            // Analisis Euler
+            hasEulerPath() {
+                const degrees = [];
+                for (let vertex of this.graph.vertices.keys()) {
+                    degrees.push(this.graph.getDegree(vertex));
+                }
+                
+                const oddDegrees = degrees.filter(d => d % 2 === 1);
+                return {
+                    hasPath: oddDegrees.length === 0 || oddDegrees.length === 2,
+                    hasCircuit: oddDegrees.length === 0,
+                    oddVertices: oddDegrees.length
+                };
+            }
+
+            findEulerPath() {
+                const eulerInfo = this.hasEulerPath();
+                if (!eulerInfo.hasPath) {
+                    return null;
+                }
+
+                // Implementasi algoritma Hierholzer
+                const adj = this.graph.getAdjacencyList();
+                const tempAdj = new Map();
+                
+                // Copy adjacency list
+                for (let [vertex, neighbors] of adj) {
+                    tempAdj.set(vertex, [...neighbors]);
+                }
+
+                let startVertex = this.graph.vertices.keys().next().value;
+                
+                // Jika ada vertex dengan degree ganjil, mulai dari salah satunya
+                if (!eulerInfo.hasCircuit) {
+                    for (let vertex of this.graph.vertices.keys()) {
+                        if (this.graph.getDegree(vertex) % 2 === 1) {
+                            startVertex = vertex;
+                            break;
+                        }
+                    }
+                }
+
+                const path = [];
+                const stack = [startVertex];
+
+                while (stack.length > 0) {
+                    const current = stack[stack.length - 1];
+                    if (tempAdj.get(current).length > 0) {
+                        const next = tempAdj.get(current).pop();
+                        tempAdj.get(next).splice(tempAdj.get(next).indexOf(current), 1);
+                        stack.push(next);
+                    } else {
+                        path.push(stack.pop());
+                    }
+                }
+
+                return path.reverse();
+            }
+
+            // Analisis Hamilton
+            hasHamiltonPath() {
+                const vertices = Array.from(this.graph.vertices.keys());
+                const n = vertices.length;
+                
+                if (n < 3) return { hasPath: false, hasCircuit: false };
+
+                // Cek kondisi Dirac untuk Hamilton Circuit
+                let minDegree = Infinity;
+                for (let vertex of vertices) {
+                    const degree = this.graph.getDegree(vertex);
+                    minDegree = Math.min(minDegree, degree);
+                }
+
+                const diracCondition = minDegree >= n / 2;
+                
+                return {
+                    hasPath: this.findHamiltonPathBacktrack(vertices),
+                    hasCircuit: this.findHamiltonCircuitBacktrack(vertices),
+                    diracCondition: diracCondition
+                };
+            }
+
+            findHamiltonPathBacktrack(vertices) {
+                const n = vertices.length;
+                const adj = this.graph.getAdjacencyList();
+                
+                for (let start of vertices) {
+                    const visited = new Set();
+                    const path = [];
+                    
+                    if (this.hamiltonPathUtil(start, visited, path, adj, n)) {
+                        return path;
+                    }
+                }
+                return null;
+            }
+
+            hamiltonPathUtil(vertex, visited, path, adj, n) {
+                visited.add(vertex);
+                path.push(vertex);
+
+                if (path.length === n) {
+                    return true;
+                }
+
+                for (let neighbor of adj.get(vertex)) {
+                    if (!visited.has(neighbor)) {
+                        if (this.hamiltonPathUtil(neighbor, visited, path, adj, n)) {
+                            return true;
+                        }
+                    }
+                }
+
+                visited.delete(vertex);
+                path.pop();
+                return false;
+            }
+
+            findHamiltonCircuitBacktrack(vertices) {
+                const n = vertices.length;
+                const adj = this.graph.getAdjacencyList();
+                
+                const visited = new Set();
+                const path = [];
+                const start = vertices[0];
+                
+                if (this.hamiltonCircuitUtil(start, start, visited, path, adj, n)) {
+                    return path;
+                }
+                return null;
+            }
+
+            hamiltonCircuitUtil(current, start, visited, path, adj, n) {
+                visited.add(current);
+                path.push(current);
+
+                if (path.length === n) {
+                    // Cek apakah bisa kembali ke start
+                    if (adj.get(current).includes(start)) {
+                        path.push(start);
+                        return true;
+                    }
+                    visited.delete(current);
+                    path.pop();
+                    return false;
+                }
+
+                for (let neighbor of adj.get(current)) {
+                    if (!visited.has(neighbor)) {
+                        if (this.hamiltonCircuitUtil(neighbor, start, visited, path, adj, n)) {
+                            return true;
+                        }
+                    }
+                }
+
+                visited.delete(current);
+                path.pop();
+                return false;
+            }
+        }
+
+        // Global variables
+        let graph = new Graph();
+        let canvas, ctx;
+        let selectedVertex = null;
+        let animationRunning = false;
+
+        // Initialize
+        window.onload = function() {
+            canvas = document.getElementById('graphCanvas');
+            ctx = canvas.getContext('2d');
+            
+            canvas.addEventListener('click', handleCanvasClick);
+            
+            // Create initial graph
+            generateRandomGraph();
+        };
+
+        function handleCanvasClick(event) {
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            const mode = document.getElementById('mode').value;
+
+            if (mode === 'add_vertex') {
+                // Cek jika klik terlalu dekat dengan vertex yang ada
+                let tooClose = false;
+                for (let vertex of graph.vertices.values()) {
+                    const dist = Math.sqrt((x - vertex.x) ** 2 + (y - vertex.y) ** 2);
+                    if (dist < 30) {
+                        tooClose = true;
+                        break;
+                    }
+                }
+                
+                if (!tooClose) {
+                    graph.addVertex(x, y);
+                    drawGraph();
+                }
+            } else if (mode === 'add_edge') {
+                const clickedVertex = getVertexAt(x, y);
+                if (clickedVertex !== null) {
+                    if (selectedVertex === null) {
+                        selectedVertex = clickedVertex;
+                    } else {
+                        if (selectedVertex !== clickedVertex) {
+                            graph.addEdge(selectedVertex, clickedVertex);
+                        }
+                        selectedVertex = null;
+                    }
+                    drawGraph();
+                }
+            } else if (mode === 'remove') {
+                const clickedVertex = getVertexAt(x, y);
+                if (clickedVertex !== null) {
+                    graph.removeVertex(clickedVertex);
+                    drawGraph();
+                }
+            }
+        }
+
+        function getVertexAt(x, y) {
+            for (let [id, vertex] of graph.vertices) {
+                const dist = Math.sqrt((x - vertex.x) ** 2 + (y - vertex.y) ** 2);
+                if (dist <= 20) {
+                    return id;
+                }
+            }
+            return null;
+        }
+
+        function drawGraph() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw edges
+            ctx.strokeStyle = '#6c757d';
+            ctx.lineWidth = 2;
+            for (let edge of graph.edges) {
+                const v1 = graph.vertices.get(edge.v1);
+                const v2 = graph.vertices.get(edge.v2);
+                
+                ctx.beginPath();
+                ctx.moveTo(v1.x, v1.y);
+                ctx.lineTo(v2.x, v2.y);
+                ctx.stroke();
+            }
+            
+            // Draw vertices
+            for (let [id, vertex] of graph.vertices) {
+                // Vertex circle
+                ctx.fillStyle = selectedVertex === id ? '#dc3545' : '#667eea';
+                ctx.beginPath();
+                ctx.arc(vertex.x, vertex.y, 20, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // Vertex border
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                
+                // Vertex label
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(vertex.label, vertex.x, vertex.y);
+            }
+        }
+
+        function createCompleteGraph() {
+            const n = parseInt(document.getElementById('numVertices').value);
+            graph.clear();
+            
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = Math.min(centerX, centerY) - 50;
+            
+            // Add vertices in circle
+            for (let i = 0; i < n; i++) {
+                const angle = (2 * Math.PI * i) / n;
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+                graph.addVertex(x, y, i);
+            }
+            
+            // Add all possible edges
+            for (let i = 0; i < n; i++) {
+                for (let j = i + 1; j < n; j++) {
+                    graph.addEdge(i, j);
+                }
+            }
+            
+            drawGraph();
+        }
+
+        function createCycleGraph() {
+            const n = parseInt(document.getElementById('numVertices').value);
+            graph.clear();
+            
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = Math.min(centerX, centerY) - 50;
+            
+            // Add vertices in circle
+            for (let i = 0; i < n; i++) {
+                const angle = (2 * Math.PI * i) / n;
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+                graph.addVertex(x, y, i);
+            }
+            
+            // Add cycle edges
+            for (let i = 0; i < n; i++) {
+                graph.addEdge(i, (i + 1) % n);
+            }
+            
+            drawGraph();
+        }
+
+        function createPathGraph() {
+            const n = parseInt(document.getElementById('numVertices').value);
+            graph.clear();
+            
+            const startX = 50;
+            const endX = canvas.width - 50;
+            const y = canvas.height / 2;
+            const stepX = (endX - startX) / (n - 1);
+            
+            // Add vertices in line
+            for (let i = 0; i < n; i++) {
+                const x = startX + i * stepX;
+                graph.addVertex(x, y, i);
+            }
+            
+            // Add path edges
+            for (let i = 0; i < n - 1; i++) {
+                graph.addEdge(i, i + 1);
+            }
+            
+            drawGraph();
+        }
+
+        function generateRandomGraph() {
+            const n = parseInt(document.getElementById('numVertices').value);
+            graph.clear();
+            
+            // Add random vertices
+            for (let i = 0; i < n; i++) {
+                const x = 50 + Math.random() * (canvas.width - 100);
+                const y = 50 + Math.random() * (canvas.height - 100);
+                graph.addVertex(x, y, i);
+            }
+            
+            // Add random edges
+            const maxEdges = n * (n - 1) / 2;
+            const numEdges = Math.floor(Math.random() * maxEdges * 0.6) + n - 1;
+            
+            for (let i = 0; i < numEdges; i++) {
+                const v1 = Math.floor(Math.random() * n);
+                const v2 = Math.floor(Math.random() * n);
+                graph.addEdge(v1, v2);
+            }
+            
+            drawGraph();
+        }
+
+        function clearGraph() {
+            graph.clear();
+            selectedVertex = null;
+            drawGraph();
+            clearResults();
+        }
+
+        function clearResults() {
+            document.getElementById('eulerStatus').innerHTML = '';
+            document.getElementById('eulerResult').innerHTML = '';
+            document.getElementById('hamiltonStatus').innerHTML = '';
+            document.getElementById('hamiltonResult').innerHTML = '';
+            document.getElementById('graphInfo').innerHTML = '';
+            document.getElementById('matrixDisplay').innerHTML = '';
+        }
+
+        function analyzeGraph() {
+            if (graph.vertices.size === 0) {
+                alert('Tambahkan vertex terlebih dahulu!');
+                return;
+            }
+
+            const analyzer = new GraphAnalyzer(graph);
+            
+            // Analisis Euler
+            const eulerInfo = analyzer.hasEulerPath();
+            const eulerPath = analyzer.findEulerPath();
+            
+            let eulerStatus = '';
+            let eulerResult = '';
+            
+            if (eulerInfo.hasCircuit) {
+                eulerStatus = '<div class="status success">✅ Memiliki Sirkuit Euler</div>';
+                eulerResult = eulerPath ? `Sirkuit Euler: ${eulerPath.join(' → ')}` : 'Sirkuit ditemukan';
+            } else if (eulerInfo.hasPath) {
+                eulerStatus = '<div class="status warning">⚠️ Memiliki Lintasan Euler (bukan sirkuit)</div>';
+                eulerResult = eulerPath ? `Lintasan Euler: ${eulerPath.join(' → ')}` : 'Lintasan ditemukan';
+            } else {
+                eulerStatus = '<div class="status error">❌ Tidak memiliki Lintasan/Sirkuit Euler</div>';
+                eulerResult = `Jumlah Titik/Node dengan derajat ganjil: ${eulerInfo.oddVertices}`;
+            }
+            
+            // Analisis Hamilton
+            const hamiltonInfo = analyzer.hasHamiltonPath();
+            const hamiltonPath = analyzer.findHamiltonPathBacktrack(Array.from(graph.vertices.keys()));
+            const hamiltonCircuit = analyzer.findHamiltonCircuitBacktrack(Array.from(graph.vertices.keys()));
+            
+            let hamiltonStatus = '';
+            let hamiltonResult = '';
+            
+            if (hamiltonCircuit) {
+                hamiltonStatus = '<div class="status success">✅ Memiliki Sirkuit Hamilton</div>';
+                hamiltonResult = `Sirkuit Hamilton: ${hamiltonCircuit.join(' → ')}`;
+            } else if (hamiltonPath) {
+                hamiltonStatus = '<div class="status warning">⚠️ Memiliki Lintasan Hamilton (bukan sirkuit)</div>';
+                hamiltonResult = `Lintasan Hamilton: ${hamiltonPath.join(' → ')}`;
+            } else {
+                hamiltonStatus = '<div class="status error">❌ Tidak memiliki Lintasan/Sirkuit Hamilton</div>';
+                hamiltonResult = hamiltonInfo.diracCondition ? 
+                    'Kondisi Graph terpenuhi tapi tidak ditemukan sirkuit' : 
+                    'Kondisi Graph tidak terpenuhi';
+            }
+            
+            // Info Graph
+            const degrees = [];
+            for (let vertex of graph.vertices.keys()) {
+                degrees.push(graph.getDegree(vertex));
+            }
+            
+            const graphInfo = `Jumlah Titik/Node: ${graph.vertices.size}
+Jumlah Sisi: ${graph.edges.length}
+Derajat setiap Titik/Node: ${Array.from(graph.vertices.keys()).map(v => `${v}:${graph.getDegree(v)}`).join(', ')}
+Total derajat: ${degrees.reduce((a, b) => a + b, 0)}
+Derajat minimum: ${Math.min(...degrees)}
+Derajat maksimum: ${Math.max(...degrees)}`;
+            
+            // Update UI
+            document.getElementById('eulerStatus').innerHTML = eulerStatus;
+            document.getElementById('eulerResult').innerHTML = eulerResult;
+            document.getElementById('hamiltonStatus').innerHTML = hamiltonStatus;
+            document.getElementById('hamiltonResult').innerHTML = hamiltonResult;
+            document.getElementById('graphInfo').innerHTML = graphInfo;
+        }
+
+        function showAdjacencyMatrix() {
+            if (graph.vertices.size === 0) {
+                document.getElementById('matrixDisplay').innerHTML = 'Tidak ada vertex dalam graph';
+                return;
+            }
+
+            const vertices = Array.from(graph.vertices.keys()).sort((a, b) => a - b);
+            const n = vertices.length;
+            const matrix = Array(n).fill().map(() => Array(n).fill(0));
+            
+            // Fill matrix
+            for (let edge of graph.edges) {
+                const i = vertices.indexOf(edge.v1);
+                const j = vertices.indexOf(edge.v2);
+                matrix[i][j] = 1;
+                matrix[j][i] = 1;
+            }
+            
+            // Create HTML table
+            let html = '<table style="margin: 0 auto; border-collapse: collapse;">';
+            html += '<tr><th style="padding: 5px; border: 1px solid #ccc; background: #f8f9fa;"></th>';
+            
+            for (let vertex of vertices) {
+                html += `<th style="padding: 5px; border: 1px solid #ccc; background: #f8f9fa;">${vertex}</th>`;
+            }
+            html += '</tr>'; 
+            for (let i = 0; i < n; i++) {
+                html += `<tr><th style="padding: 5px; border: 1px solid #ccc; background: #f8f9fa;">${vertices[i]}</th>`;
+                for (let j = 0; j < n; j++) {
+                    const cellColor = matrix[i][j] === 1 ? '#d4edda' : '#ffffff';
+                    html += `<td style="padding: 5px; border: 1px solid #ccc; text-align: center; background: ${cellColor};">${matrix[i][j]}</td>`;
+                }
+                html += '</tr>';
+            }
+            html += '</table>';
+            
+            document.getElementById('matrixDisplay').innerHTML = html;
+        }
+
+        function animatePath() {
+            if (animationRunning) return;
+            
+            const analyzer = new GraphAnalyzer(graph);
+            const eulerPath = analyzer.findEulerPath();
+            const hamiltonPath = analyzer.findHamiltonPathBacktrack(Array.from(graph.vertices.keys()));
+            
+            let pathToAnimate = eulerPath || hamiltonPath;
+            
+            if (!pathToAnimate) {
+                alert('Tidak ada path yang bisa dianimasi!');
+                return;
+            }
+            
+            animationRunning = true;
+            let currentIndex = 0;
+            
+            const animateStep = () => {
+                if (currentIndex >= pathToAnimate.length - 1) {
+                    animationRunning = false;
+                    drawGraph();
+                    return;
+                }
+                
+                // Redraw graph
+                drawGraph();
+                
+                // Highlight current edge
+                const currentVertex = pathToAnimate[currentIndex];
+                const nextVertex = pathToAnimate[currentIndex + 1];
+                
+                const v1 = graph.vertices.get(currentVertex);
+                const v2 = graph.vertices.get(nextVertex);
+                
+                // Draw animated edge
+                ctx.strokeStyle = '#dc3545';
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.moveTo(v1.x, v1.y);
+                ctx.lineTo(v2.x, v2.y);
+                ctx.stroke();
+                
+                // Highlight vertices
+                ctx.fillStyle = '#dc3545';
+                ctx.beginPath();
+                ctx.arc(v1.x, v1.y, 22, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(v2.x, v2.y, 22, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // Redraw vertex labels
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(v1.label, v1.x, v1.y);
+                ctx.fillText(v2.label, v2.x, v2.y);
+                
+                currentIndex++;
+                setTimeout(animateStep, 800);
+            };
+            
+            animateStep();
+        }
+
+        // Update instructions based on mode
+        document.getElementById('mode').addEventListener('change', function() {
+            const mode = this.value;
+            const instructions = document.getElementById('instructions');
+            
+            switch(mode) {
+                case 'add_vertex':
+                    instructions.textContent = 'Klik untuk menambah vertex';
+                    break;
+                case 'add_edge':
+                    instructions.textContent = 'Klik dua vertex untuk menambah edge';
+                    break;
+                case 'remove':
+                    instructions.textContent = 'Klik vertex untuk menghapus';
+                    break;
+            }
+        });
+    </script>
+</body>
+</html>
