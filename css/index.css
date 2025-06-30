@@ -52,11 +52,11 @@ body {
     border-radius: 15px;
     width: 90%;
     max-width: 600px;
-    max-height: 80vh; /* Batasi tinggi maksimal */
+    max-height: 80vh;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     position: relative;
     animation: modalSlideIn 0.3s ease-out;
-    overflow-y: auto; /* Tambahkan scroll vertikal */
+    overflow-y: auto;
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
@@ -78,7 +78,6 @@ body {
     margin-top: 10px;
 }
 
-/* Tambahkan styling untuk scrollbar di webkit browsers */
 .modal-content::-webkit-scrollbar {
     width: 8px;
 }
@@ -549,7 +548,6 @@ body {
         font-size: 14px;
     }
     
-    /* Canvas container mobile */
     .canvas-container {
         padding: 10px;
         margin-bottom: 20px;
@@ -566,7 +564,6 @@ body {
         border: 1px solid #dee2e6;
     }
     
-    /* Results section mobile */
     .results {
         padding: 15px;
     }
@@ -607,7 +604,6 @@ body {
         min-width: 25px;
     }
     
-    /* Control panels mobile */
     .control-panel {
         padding: 15px;
         margin-bottom: 15px;
@@ -619,7 +615,7 @@ body {
     
     .input-group input,
     .input-group select {
-        font-size: 16px; /* Prevent zoom on iOS */
+        font-size: 16px;
     }
     
     .btn {
@@ -637,7 +633,6 @@ body {
         padding: 8px 12px;
     }
     
-    /* Status messages mobile */
     .status {
         font-size: 13px;
         padding: 8px;
@@ -667,7 +662,6 @@ body {
     }
 }
 
-/* Extra small devices */
 @media (max-width: 480px) {
     .container {
         padding: 5px;
