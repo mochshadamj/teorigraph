@@ -879,12 +879,10 @@
         function drawGraph() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // Gambar semua edge terlebih dahulu
             for (let edge of graph.edges) {
                 const v1 = graph.vertices.get(edge.v1);
                 const v2 = graph.vertices.get(edge.v2);
                 
-                // Cek apakah edge ini adalah path hijau permanen
                 const isPermanentGreen = permanentGreenPaths.some(path => 
                     (path.from === edge.v1 && path.to === edge.v2) ||
                     (path.from === edge.v2 && path.to === edge.v1)
@@ -895,7 +893,6 @@
                     (hoveredEdge.v1 === edge.v2 && hoveredEdge.v2 === edge.v1));
                 
                 if (isPermanentGreen) {
-                    // Edge hijau permanen
                     ctx.shadowColor = 'rgba(40, 167, 69, 0.3)';
                     ctx.shadowBlur = 8;
                     ctx.shadowOffsetX = 0;
@@ -924,20 +921,17 @@
                 ctx.stroke();
             }
             
-            // Reset shadow untuk vertex
             ctx.shadowColor = 'transparent';
             ctx.shadowBlur = 0;
             ctx.shadowOffsetX = 0;
             ctx.shadowOffsetY = 0;
             
-            // Gambar vertex
             for (let [id, vertex] of graph.vertices) {
                 const isHovered = hoveredVertex === id;
                 const isSelected = selectedVertex === id;
                 const isPermanentGreen = permanentGreenVertices.has(id);
                 
                 if (isPermanentGreen) {
-                    // Vertex hijau permanen
                     ctx.fillStyle = '#28a745';
                 } else if (isSelected) {
                     ctx.fillStyle = '#dc3545';
@@ -961,7 +955,6 @@
                 ctx.textBaseline = 'middle';
                 ctx.fillText(vertex.label, vertex.x, vertex.y);
                 
-                // Tambahkan checkmark untuk vertex hijau permanen
                 if (isPermanentGreen) {
                     ctx.fillStyle = '#fff';
                     ctx.font = 'bold 10px Arial';
@@ -1066,7 +1059,6 @@
             graph.clear();
             selectedVertex = null;
             
-            // TAMBAHKAN baris ini:
             clearPermanentPaths();
             
             drawGraph();
@@ -1313,7 +1305,6 @@ Derajat maksimum: ${Math.max(...degrees)}`;
                 return;
             }
             
-            // RESET permanent paths setiap kali animasi dimulai
             permanentGreenPaths = [];
             permanentGreenVertices.clear();
             
@@ -1349,7 +1340,6 @@ Derajat maksimum: ${Math.max(...degrees)}`;
                 } else if (step.action === 'correct') {
                     addCorrectPath(step.from, step.to);
                     
-                    // TAMBAHKAN path ke permanent green paths
                     permanentGreenPaths.push({ from: step.from, to: step.to });
                     permanentGreenVertices.add(step.from);
                     permanentGreenVertices.add(step.to);
@@ -1462,13 +1452,11 @@ Derajat maksimum: ${Math.max(...degrees)}`;
         }
 
         function addCorrectPath(from, to) {
-            // Gambar graph dengan path hijau permanen yang sudah ada
             drawGraph();
             
             const fromVertex = graph.vertices.get(from);
             const toVertex = graph.vertices.get(to);
             
-            // Gambar path baru yang sedang ditambahkan dengan efek khusus
             ctx.strokeStyle = '#28a745';
             ctx.lineWidth = 5;
             ctx.setLineDash([]);
@@ -1479,11 +1467,9 @@ Derajat maksimum: ${Math.max(...degrees)}`;
             ctx.lineTo(toVertex.x, toVertex.y);
             ctx.stroke();
             
-            // Reset shadow
             ctx.shadowColor = 'transparent';
             ctx.shadowBlur = 0;
             
-            // Gambar vertex dengan efek khusus untuk yang baru ditambahkan
             ctx.fillStyle = '#28a745';
             ctx.beginPath();
             ctx.arc(fromVertex.x, fromVertex.y, 25, 0, 2 * Math.PI);
@@ -1492,7 +1478,6 @@ Derajat maksimum: ${Math.max(...degrees)}`;
             ctx.arc(toVertex.x, toVertex.y, 25, 0, 2 * Math.PI);
             ctx.fill();
             
-            // Border vertex
             ctx.strokeStyle = '#1e7e34';
             ctx.lineWidth = 3;
             ctx.beginPath();
@@ -1502,7 +1487,6 @@ Derajat maksimum: ${Math.max(...degrees)}`;
             ctx.arc(toVertex.x, toVertex.y, 25, 0, 2 * Math.PI);
             ctx.stroke();
             
-            // Label vertex
             ctx.fillStyle = 'white';
             ctx.font = 'bold 16px Arial';
             ctx.textAlign = 'center';
@@ -1510,7 +1494,6 @@ Derajat maksimum: ${Math.max(...degrees)}`;
             ctx.fillText(fromVertex.label, fromVertex.x, fromVertex.y);
             ctx.fillText(toVertex.label, toVertex.x, toVertex.y);
             
-            // Checkmark untuk menandai sebagai benar
             ctx.fillStyle = '#fff';
             ctx.font = 'bold 12px Arial';
             ctx.fillText('✓', toVertex.x + 15, toVertex.y - 15);
@@ -1598,7 +1581,6 @@ Derajat maksimum: ${Math.max(...degrees)}`;
             }
         }
 
-        // Close modal when clicking outside
         window.addEventListener('click', function(event) {
             const modals = ['eulerTheoryModal', 'hamiltonTheoryModal', 'graphBasicsTheoryModal', 'differencesTheoryModal', 'applicationsTheoryModal'];
             
@@ -1611,7 +1593,6 @@ Derajat maksimum: ${Math.max(...degrees)}`;
             });
         });
 
-        // Keyboard shortcuts
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 const modals = ['eulerTheoryModal', 'hamiltonTheoryModal', 'graphBasicsTheoryModal', 'differencesTheoryModal', 'applicationsTheoryModal'];
