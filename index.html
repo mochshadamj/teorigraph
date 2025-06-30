@@ -4,221 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lintasan/Sirkuit Euler dan Hamilton</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            color: #333;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .controls {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .control-panel {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 15px;
-            border: 2px solid #e9ecef;
-        }
-
-        .control-panel h3 {
-            color: #495057;
-            margin-bottom: 15px;
-            font-size: 1.2em;
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: #495057;
-        }
-
-        .input-group input, .input-group select {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #dee2e6;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: border-color 0.3s;
-        }
-
-        .input-group input:focus, .input-group select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .btn {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            margin: 5px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-secondary {
-            background: linear-gradient(45deg, #6c757d, #495057);
-        }
-
-        .btn-danger {
-            background: linear-gradient(45deg, #dc3545, #c82333);
-        }
-
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-
-        .canvas-container {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        #graphCanvas {
-            border: 2px solid #dee2e6;
-            border-radius: 10px;
-            cursor: crosshair;
-            display: block;
-            margin: 0 auto;
-        }
-
-        .results {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .result-section {
-            margin-bottom: 25px;
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
-            background: #f8f9fa;
-        }
-
-        .result-section h4 {
-            color: #495057;
-            margin-bottom: 10px;
-            font-size: 1.1em;
-        }
-
-        .result-content {
-            font-family: 'Courier New', monospace;
-            background: white;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #dee2e6;
-            min-height: 40px;
-            white-space: pre-wrap;
-        }
-
-        .status {
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .status.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .status.warning {
-            background: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeaa7;
-        }
-
-        .status.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .matrix-display {
-            font-family: 'Courier New', monospace;
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #dee2e6;
-            overflow-x: auto;
-        }
-
-        .predefined-graphs {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
-
-        @media (max-width: 768px) {
-            .controls, .main-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .container {
-                padding: 15px;
-            }
-            
-            .header h1 {
-                font-size: 2em;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
     <div class="container">
@@ -230,14 +16,6 @@
         <div class="controls">
             <div class="control-panel">
                 <h3>🎯 Kontrol Graph</h3>
-                <div class="input-group">
-                    <label>Mode:</label>
-                    <select id="mode">
-                        <option value="add_vertex">Tambah Titik/Node (Vertex)</option>
-                        <option value="add_edge">Tambah Sisi (Edge)</option>
-                        <option value="remove">Hapus</option>
-                    </select>
-                </div>
                 <div class="input-group">
                     <label>Jumlah Titik/Node:</label>
                     <input type="number" id="numVertices" value="5" min="3" max="10">
@@ -271,8 +49,10 @@
             <div class="canvas-container">
                 <h3 style="text-align: center; margin-bottom: 15px; color: #495057;">📈 Visualisasi</h3>
                 <canvas id="graphCanvas" width="500" height="400"></canvas>
-                <div id="instructions" style="text-align: center; margin-top: 10px; color: #6c757d; font-size: 14px;">
-                    Klik untuk menambah vertex, klik dua vertex untuk menambah edge
+                <div style="text-align: center; margin-top: 10px;">
+                    <button class="help-btn" onclick="openInstructionsModal()">
+                        ❓ Bantuan & Instruksi
+                    </button>
                 </div>
             </div>
 
@@ -280,15 +60,27 @@
                 <h3 style="margin-bottom: 20px; color: #495057;">📋 Hasil Analisis</h3>
                 
                 <div class="result-section">
-                    <h4>🔄 Lintasan & Sirkuit Euler</h4>
-                    <div id="eulerStatus" class="status"></div>
-                    <div id="eulerResult" class="result-content"></div>
+                    <h4>🏃‍♂️ Lintasan Euler</h4>
+                    <div id="eulerPathStatus" class="status"></div>
+                    <div id="eulerPathResult" class="result-content"></div>
                 </div>
 
                 <div class="result-section">
-                    <h4>🏃‍♂️ Lintasan & Sirkuit Hamilton</h4>
-                    <div id="hamiltonStatus" class="status"></div>
-                    <div id="hamiltonResult" class="result-content"></div>
+                    <h4>🔁 Sirkuit Euler</h4>
+                    <div id="eulerCircuitStatus" class="status"></div>
+                    <div id="eulerCircuitResult" class="result-content"></div>
+                </div>
+
+                <div class="result-section">
+                    <h4>🏃‍♂️ Lintasan Hamilton</h4>
+                    <div id="hamiltonPathStatus" class="status"></div>
+                    <div id="hamiltonPathResult" class="result-content"></div>
+                </div>
+
+                <div class="result-section">
+                    <h4>🔁 Sirkuit Hamilton</h4>
+                    <div id="hamiltonCircuitStatus" class="status"></div>
+                    <div id="hamiltonCircuitResult" class="result-content"></div>
                 </div>
 
                 <div class="result-section">
@@ -299,6 +91,348 @@
                 <div class="result-section">
                     <h4>🔢 Pendekatan Matrix</h4>
                     <div id="matrixDisplay" class="matrix-display"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="theory-buttons">
+            <button class="theory-btn" onclick="openTheoryModal('euler')">
+                🏃‍♂️ Apa itu Euler?
+            </button>
+            <button class="theory-btn" onclick="openTheoryModal('hamilton')">
+                🔄 Apa itu Hamilton?
+            </button>
+            <button class="theory-btn" onclick="openTheoryModal('graph-basics')">
+                📚 Dasar-dasar Graf
+            </button>
+            <button class="theory-btn" onclick="openTheoryModal('differences')">
+                ⚖️ Perbedaan Keduanya
+            </button>
+            <button class="theory-btn" onclick="openTheoryModal('applications')">
+                🌟 Aplikasi Real Life
+            </button>
+        </div>
+
+        <!-- Modal untuk teori Euler -->
+        <div id="eulerTheoryModal" class="theory-modal">
+            <div class="theory-modal-content">
+                <div class="theory-modal-header">
+                    <h2>🏃‍♂️ Lintasan & Sirkuit Euler</h2>
+                    <span class="theory-close" onclick="closeTheoryModal('euler')">&times;</span>
+                </div>
+                <div class="theory-modal-body">
+                    <div class="theory-section">
+                        <h3>🤔 Apa sih Euler itu?</h3>
+                        <p>Jadi gini bestie, <span class="highlight">Leonhard Euler</span> itu matematikawan Swiss yang super jenius! Dia hidup di abad ke-18 dan bikin teori yang sampai sekarang masih kepake banget.</p>
+                        
+                        <div class="tips-box">
+                            <strong>💡 Fun Fact:</strong> Euler itu udah buta sebelah mata sejak muda, tapi tetep jadi salah satu matematikawan terhebat sepanjang masa! Inspiratif banget kan? 🔥
+                        </div>
+                    </div>
+                    
+                    <div class="theory-section">
+                        <h3>🏃‍♂️ Lintasan Euler</h3>
+                        <p>Lintasan Euler tuh ibarat kamu jalan-jalan di kota, dan kamu pengen <span class="highlight">lewatin semua jalan tepat sekali</span> tanpa ngulang. Keren kan?</p>
+                        
+                        <div class="formula">
+                            Syarat Lintasan Euler: Tepat 2 titik berderajat ganjil
+                        </div>
+                        
+                        <div class="example-box">
+                            <strong>🌟 Contoh Gampang:</strong> Bayangin kamu di Bandung mau jalan dari Dago ke Cihampelas, terus ke Braga, balik ke Dago tapi lewat jalan yang beda. Nah itu lintasan Euler!
+                        </div>
+                    </div>
+                    
+                    <div class="theory-section">
+                        <h3>🔁 Sirkuit Euler</h3>
+                        <p>Kalo sirkuit Euler itu lebih kece lagi! Kamu jalan-jalan <span class="highlight">lewatin semua jalan tepat sekali</span> terus balik lagi ke titik awal. Kayak pulang pergi gitu deh!</p>
+                        
+                        <div class="formula">
+                            Syarat Sirkuit Euler: Semua titik berderajat genap
+                        </div>
+                        
+                        <div class="tips-box">
+                            <strong>🎯 Tips Jitu:</strong> Inget aja, kalo mau ada sirkuit Euler, semua titik harus punya "temen" genap. Gak boleh ada yang jomblo! 😂
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal untuk teori Hamilton -->
+        <div id="hamiltonTheoryModal" class="theory-modal">
+            <div class="theory-modal-content">
+                <div class="theory-modal-header">
+                    <h2>🔄 Lintasan & Sirkuit Hamilton</h2>
+                    <span class="theory-close" onclick="closeTheoryModal('hamilton')">&times;</span>
+                </div>
+                <div class="theory-modal-body">
+                    <div class="theory-section">
+                        <h3>🧠 Siapa itu Hamilton?</h3>
+                        <p><span class="highlight">William Rowan Hamilton</span> itu matematikawan Irlandia yang bikin konsep ini. Fun fact: dia juga yang nemuin quaternion lho! Pinter banget emang 🤓</p>
+                    </div>
+                    
+                    <div class="theory-section">
+                        <h3>🏃‍♂️ Lintasan Hamilton</h3>
+                        <p>Nah kalo Hamilton itu beda sama Euler. Kalo Euler fokus ke <span class="highlight">edge/sisi</span>, Hamilton fokus ke <span class="highlight">vertex/titik</span>!</p>
+                        <p>Jadi lintasan Hamilton itu kamu harus <span class="highlight">kunjungi setiap titik tepat sekali</span>. Kayak main monopoli tapi gak boleh lewat kotak yang sama dua kali!</p>
+                        
+                        <div class="example-box">
+                            <strong>🎮 Analogi Game:</strong> Bayangin kamu main game RPG, terus ada 5 kota yang harus dikunjungi. Lintasan Hamilton itu rute yang ngunjungin setiap kota tepat sekali tanpa balik-balik!
+                        </div>
+                    </div>
+                    
+                    <div class="theory-section">
+                        <h3>🔁 Sirkuit Hamilton</h3>
+                        <p>Sirkuit Hamilton itu yang paling epic! Kamu <span class="highlight">kunjungi setiap titik tepat sekali</span> dan akhirnya balik ke titik awal.</p>
+                        
+                        <div class="tips-box">
+                            <strong>🎯 Pro Tips:</strong> Hamilton itu susah banget dicari algoritmanya! Makanya banyak yang pake brute force atau backtracking. Sabar ya bestie! 💪
+                        </div>
+                        
+                        <div class="formula">
+                            Kondisi Dirac: Jika setiap titik berderajat ≥ n/2, 
+                            maka pasti ada sirkuit Hamilton
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal untuk dasar-dasar graf -->
+        <div id="graphBasicsTheoryModal" class="theory-modal">
+            <div class="theory-modal-content">
+                <div class="theory-modal-header">
+                    <h2>📚 Dasar-dasar Teori Graf</h2>
+                    <span class="theory-close" onclick="closeTheoryModal('graph-basics')">&times;</span>
+                </div>
+                <div class="theory-modal-body">
+                    <div class="theory-section">
+                        <h3>🤷‍♀️ Graf itu apaan sih?</h3>
+                        <p>Graf itu bukan grafik ya bestie! 😅 Graf itu struktur matematika yang terdiri dari <span class="highlight">titik (vertex)</span> dan <span class="highlight">garis (edge)</span> yang menghubungkan titik-titik tersebut.</p>
+                        
+                        <div class="example-box">
+                            <strong>🌐 Contoh Real:</strong>
+                            <ul>
+                                <li>🚇 Peta MRT - titik = stasiun, garis = rel</li>
+                                <li>📱 Media sosial - titik = orang, garis = pertemanan</li>
+                                <li>🌐 Internet - titik = website, garis = link</li>
+                                <li>🗺️ Peta jalan - titik = persimpangan, garis = jalan</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="theory-section">
+                        <h3>📐 Istilah-istilah Penting</h3>
+                        <p><strong>Vertex/Node/Titik:</strong> Bulatan-bulatan yang kamu klik itu!</p>
+                        <p><strong>Edge/Sisi:</strong> Garis yang menghubungkan dua titik</p>
+                        <p><strong>Degree/Derajat:</strong> Jumlah garis yang nyambung ke satu titik</p>
+                        
+                        <div class="tips-box">
+                            <strong>🧮 Rumus Ajaib:</strong> Total semua derajat = 2 × jumlah edge<br>
+                            Kenapa? Karena setiap edge dihitung 2 kali (dari kedua ujungnya)! 🤯
+                        </div>
+                    </div>
+
+                    <div class="theory-section">
+                        <h3>🎨 Jenis-jenis Graf</h3>
+                        <p><strong>🔗 Graf Sederhana:</strong> Gak ada edge ganda, gak ada loop</p>
+                        <p><strong>🌟 Graf Lengkap:</strong> Setiap titik terhubung ke semua titik lain</p>
+                        <p><strong>⭕ Graf Siklus:</strong> Bentuk lingkaran gitu deh!</p>
+                        <p><strong>📏 Graf Lintasan:</strong> Bentuk garis lurus</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal untuk perbedaan -->
+        <div id="differencesTheoryModal" class="theory-modal">
+            <div class="theory-modal-content">
+                <div class="theory-modal-header">
+                    <h2>⚖️ Euler vs Hamilton</h2>
+                    <span class="theory-close" onclick="closeTheoryModal('differences')">&times;</span>
+                </div>
+                <div class="theory-modal-body">
+                    <div class="theory-section">
+                        <h3>🥊 Battle of the Paths!</h3>
+                        <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                            <tr style="background: linear-gradient(45deg, #667eea, #764ba2); color: white;">
+                                <th style="padding: 15px; text-align: left;">Aspek</th>
+                                <th style="padding: 15px; text-align: left;">🏃‍♂️ Euler</th>
+                                <th style="padding: 15px; text-align: left;">🔄 Hamilton</th>
+                            </tr>
+                            <tr style="background: #f8f9fa;">
+                                <td style="padding: 10px; font-weight: bold;">Fokus</td>
+                                <td style="padding: 10px;">Edge/Sisi/Jalan</td>
+                                <td style="padding: 10px;">Vertex/Titik/Kota</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; font-weight: bold;">Aturan</td>
+                                <td style="padding: 10px;">Lewati setiap JALAN sekali</td>
+                                <td style="padding: 10px;">Kunjungi setiap KOTA sekali</td>
+                            </tr>
+                            <tr style="background: #f8f9fa;">
+                                <td style="padding: 10px; font-weight: bold;">Kesulitan</td>
+                                <td style="padding: 10px;">Mudah dicek 😎</td>
+                                <td style="padding: 10px;">Susah banget! 😵</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; font-weight: bold;">Syarat</td>
+                                <td style="padding: 10px;">Lihat derajat titik</td>
+                                <td style="padding: 10px;">Harus dicoba satu-satu</td>
+                            </tr>
+                        </table>
+                        
+                        <div class="tips-box">
+                            <strong>🎯 Inget Gampangnya:</strong><br>
+                            • <strong>Euler</strong> = jalan-jalan tanpa ngulang JALAN<br>
+                            • <strong>Hamilton</strong> = wisata tanpa ngulang TEMPAT
+                        </div>
+                    </div>
+                    
+                    <div class="theory-section">
+                        <h3>🧩 Mana yang Lebih Susah?</h3>
+                        <p>Hamilton itu <span class="highlight">jauh lebih susah</span> dari Euler! Kenapa?</p>
+                        
+                        <div class="example-box">
+                            <strong>🏃‍♂️ Euler:</strong> Tinggal hitung derajat titik. Ganjil berapa? Kalau 0 atau 2, beres! Gampang kan? 😄<br><br>
+                            <strong>🔄 Hamilton:</strong> Harus coba satu-satu semua kemungkinan rute. Kalau ada 10 kota, kemungkinannya bisa jutaan! Pusing! 🤯
+                        </div>
+                        
+                        <div class="formula">
+                            Kompleksitas Hamilton: O(n!) - Faktorial!
+                            10 kota = 3,628,800 kemungkinan! 😱
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal untuk aplikasi -->
+        <div id="applicationsTheoryModal" class="theory-modal">
+            <div class="theory-modal-content">
+                <div class="theory-modal-header">
+                    <h2>🌟 Aplikasi di Dunia Nyata</h2>
+                    <span class="theory-close" onclick="closeTheoryModal('applications')">&times;</span>
+                </div>
+                <div class="theory-modal-body">
+                    <div class="theory-section">
+                        <h3>🏃‍♂️ Euler di Kehidupan Sehari-hari</h3>
+                        
+                        <div class="example-box">
+                            <strong>🚛 Delivery Service:</strong> Abang Gojek/Grab pengen lewatin semua jalan di suatu area tanpa ngulang. Euler path is the way! 🛵
+                        </div>
+                        
+                        <div class="example-box">
+                            <strong>🧹 Robot Vacuum:</strong> Roomba kamu pake algoritma mirip Euler buat bersihin lantai tanpa ngulang area yang sama! 🤖
+                        </div>
+                        
+                        <div class="example-box">
+                            <strong>🎮 Game Design:</strong> Bikin maze atau puzzle game yang harus dilalui tanpa ngulang jalur! 🎯
+                        </div>
+                    </div>
+                    
+                    <div class="theory-section">
+                        <h3>🔄 Hamilton dalam Industri</h3>
+                        
+                        <div class="example-box">
+                            <strong>🚚 Traveling Salesman:</strong> Sales yang mau kunjungi semua kota dengan jarak minimum. Classic Hamilton problem! 💼
+                        </div>
+                        
+                        <div class="example-box">
+                            <strong>🏭 Manufacturing:</strong> Mesin produksi yang harus ngerjain semua part tanpa nge-skip, dengan waktu minimum! ⚙️
+                        </div>
+                        
+                        <div class="example-box">
+                            <strong>🧬 DNA Sequencing:</strong> Nyusun urutan DNA dengan algoritma Hamilton. Canggih banget! 🔬
+                        </div>
+                        
+                        <div class="example-box">
+                            <strong>🎵 Music Theory:</strong> Bikin komposisi musik yang pake semua nada tanpa ngulang! 🎶
+                        </div>
+                    </div>
+                    
+                    <div class="theory-section">
+                        <h3>💰 Di Dunia Bisnis & Tech</h3>
+                        
+                        <div class="tips-box">
+                            <strong>🚀 Startup Ideas:</strong>
+                            <ul>
+                                <li>App optimasi rute kurir</li>
+                                <li>Smart city traffic management</li>
+                                <li>Game puzzle berbasis graf</li>
+                                <li>Social network analysis</li>
+                                <li>Supply chain optimization</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="theory-section">
+                        <h3>🎓 Kenapa Harus Belajar Ini?</h3>
+                        <p>Teori graf itu <span class="highlight">everywhere</span> banget di tech industry!</p>
+                        <p>• <strong>Google Maps:</strong> Shortest path algorithms</p>
+                        <p>• <strong>Facebook:</strong> Friend recommendation</p>
+                        <p>• <strong>Netflix:</strong> Content recommendation system</p>
+                        <p>• <strong>Uber:</strong> Driver-passenger matching</p>
+                        
+                        <div class="formula">
+                            Graf Theory = Kunci sukses di tech industry! 🔑✨
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Instruksi -->
+    <div id="instructionsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeInstructionsModal()">&times;</span>
+            <h2 style="color: #333; margin-bottom: 20px; text-align: center;">
+                📋 Panduan Penggunaan Graph Analyzer
+            </h2>
+
+            <div class="instructions-wrapper">
+                <div class="instruction-item">
+                    <div class="instruction-icon">➕</div>
+                    <div>
+                        <strong>Menambah Node:</strong> Klik pada area kosong di canvas untuk menambahkan node baru
+                    </div>
+                </div>
+                
+                <div class="instruction-item">
+                    <div class="instruction-icon">🔗</div>
+                    <div>
+                        <strong>Menambah Edge:</strong> Drag dari satu node ke node lain untuk membuat koneksi
+                    </div>
+                </div>
+                
+                <div class="instruction-item">
+                    <div class="instruction-icon">🗑️</div>
+                    <div>
+                        <strong>Menghapus Node:</strong> Klik kanan pada node yang ingin dihapus
+                    </div>
+                </div>
+                
+                <div class="instruction-item">
+                    <div class="instruction-icon">✂️</div>
+                    <div>
+                        <strong>Menghapus Edge:</strong> Klik kanan pada garis edge yang ingin dihapus
+                    </div>
+                </div>
+                
+                <div class="instruction-item">
+                    <div class="instruction-icon">🎯</div>
+                    <div>
+                        <strong>Memilih Node:</strong> Klik pada node untuk memilih (akan berubah warna merah)
+                    </div>
+                </div>
+                
+                <div class="instruction-item">
+                    <div class="instruction-icon">🔍</div>
+                    <div>
+                        <strong>Analisis:</strong> Gunakan tombol "Analisis Graph" untuk melihat hasil Euler dan Hamilton
+                    </div>
                 </div>
             </div>
         </div>
@@ -372,7 +506,6 @@
                 this.graph = graph;
             }
 
-            // Analisis Euler
             hasEulerPath() {
                 const degrees = [];
                 for (let vertex of this.graph.vertices.keys()) {
@@ -393,18 +526,15 @@
                     return null;
                 }
 
-                // Implementasi algoritma Hierholzer
                 const adj = this.graph.getAdjacencyList();
                 const tempAdj = new Map();
                 
-                // Copy adjacency list
                 for (let [vertex, neighbors] of adj) {
                     tempAdj.set(vertex, [...neighbors]);
                 }
 
                 let startVertex = this.graph.vertices.keys().next().value;
                 
-                // Jika ada vertex dengan degree ganjil, mulai dari salah satunya
                 if (!eulerInfo.hasCircuit) {
                     for (let vertex of this.graph.vertices.keys()) {
                         if (this.graph.getDegree(vertex) % 2 === 1) {
@@ -431,14 +561,12 @@
                 return path.reverse();
             }
 
-            // Analisis Hamilton
             hasHamiltonPath() {
                 const vertices = Array.from(this.graph.vertices.keys());
                 const n = vertices.length;
                 
                 if (n < 3) return { hasPath: false, hasCircuit: false };
 
-                // Cek kondisi Dirac untuk Hamilton Circuit
                 let minDegree = Infinity;
                 for (let vertex of vertices) {
                     const degree = this.graph.getDegree(vertex);
@@ -509,7 +637,6 @@
                 path.push(current);
 
                 if (path.length === n) {
-                    // Cek apakah bisa kembali ke start
                     if (adj.get(current).includes(start)) {
                         path.push(start);
                         return true;
@@ -538,6 +665,19 @@
         let canvas, ctx;
         let selectedVertex = null;
         let animationRunning = false;
+        let isDragging = false;
+        let dragStartVertex = null;
+        let mousePos = { x: 0, y: 0 };
+        let lastClickTime = 0;
+        let clickThreshold = 200;
+        let hoveredEdge = null;
+        let hoveredVertex = null;
+        let dragCompleted = false;
+        let pathAnimationRunning = false;
+        let animationSpeed = 1500;
+        let explorationPaths = [];
+        let permanentGreenPaths = [];
+        let permanentGreenVertices = new Set();
 
         // Initialize
         window.onload = function() {
@@ -545,49 +685,152 @@
             ctx = canvas.getContext('2d');
             
             canvas.addEventListener('click', handleCanvasClick);
+            canvas.addEventListener('mousedown', handleMouseDown);
+            canvas.addEventListener('mousemove', handleMouseMove);
+            canvas.addEventListener('mouseup', handleMouseUp);
+            canvas.addEventListener('contextmenu', handleRightClick);
+            canvas.addEventListener('mouseleave', function() {
+                hoveredEdge = null;
+                hoveredVertex = null;
+                updateCanvasCursor();
+                drawGraph();
+            });
             
-            // Create initial graph
             generateRandomGraph();
         };
 
         function handleCanvasClick(event) {
+            if (isDragging || dragCompleted) return;
+            
             const rect = canvas.getBoundingClientRect();
             const x = event.clientX - rect.left;
             const y = event.clientY - rect.top;
-            const mode = document.getElementById('mode').value;
-
-            if (mode === 'add_vertex') {
-                // Cek jika klik terlalu dekat dengan vertex yang ada
+            
+            const clickedVertex = getVertexAt(x, y);
+            
+            if (clickedVertex !== null) {
+                selectedVertex = clickedVertex;
+                drawGraph();
+            } else {
                 let tooClose = false;
                 for (let vertex of graph.vertices.values()) {
                     const dist = Math.sqrt((x - vertex.x) ** 2 + (y - vertex.y) ** 2);
-                    if (dist < 30) {
+                    if (dist < 40) {
                         tooClose = true;
                         break;
                     }
                 }
                 
                 if (!tooClose) {
-                    graph.addVertex(x, y);
+                    const newVertexId = graph.addVertex(x, y);
+                    selectedVertex = null;
                     drawGraph();
                 }
-            } else if (mode === 'add_edge') {
-                const clickedVertex = getVertexAt(x, y);
-                if (clickedVertex !== null) {
-                    if (selectedVertex === null) {
-                        selectedVertex = clickedVertex;
-                    } else {
-                        if (selectedVertex !== clickedVertex) {
-                            graph.addEdge(selectedVertex, clickedVertex);
-                        }
-                        selectedVertex = null;
-                    }
-                    drawGraph();
+            }
+        }
+
+        function handleMouseDown(event) {
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            
+            const clickedVertex = getVertexAt(x, y);
+            
+            if (clickedVertex !== null && event.button === 0) {
+                isDragging = true;
+                dragStartVertex = clickedVertex;
+                selectedVertex = clickedVertex;
+                drawGraph();
+                event.preventDefault();
+            }
+        }
+
+        function handleMouseMove(event) {
+            const rect = canvas.getBoundingClientRect();
+            mousePos.x = event.clientX - rect.left;
+            mousePos.y = event.clientY - rect.top;
+            
+            const prevHoveredEdge = hoveredEdge;
+            const prevHoveredVertex = hoveredVertex;
+            hoveredEdge = null;
+            hoveredVertex = null;
+            
+            hoveredVertex = getVertexAt(mousePos.x, mousePos.y);
+            if (!hoveredVertex) {
+                hoveredEdge = getEdgeAt(mousePos.x, mousePos.y);
+            }
+            
+            updateCanvasCursor();
+            
+            if (hoveredEdge !== prevHoveredEdge || hoveredVertex !== prevHoveredVertex) {
+                drawGraph();
+            }
+            
+            if (isDragging && dragStartVertex !== null) {
+                drawGraph();
+                
+                const startVertex = graph.vertices.get(dragStartVertex);
+                ctx.strokeStyle = '#dc3545';
+                ctx.lineWidth = 3;
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.moveTo(startVertex.x, startVertex.y);
+                ctx.lineTo(mousePos.x, mousePos.y);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                const targetVertex = getVertexAt(mousePos.x, mousePos.y);
+                if (targetVertex !== null && targetVertex !== dragStartVertex) {
+                    const target = graph.vertices.get(targetVertex);
+                    ctx.strokeStyle = '#28a745';
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.arc(target.x, target.y, 25, 0, 2 * Math.PI);
+                    ctx.stroke();
                 }
-            } else if (mode === 'remove') {
-                const clickedVertex = getVertexAt(x, y);
-                if (clickedVertex !== null) {
-                    graph.removeVertex(clickedVertex);
+            }
+        }
+
+        function handleMouseUp(event) {
+            if (isDragging && dragStartVertex !== null) {
+                const rect = canvas.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+                
+                const targetVertex = getVertexAt(x, y);
+                
+                if (targetVertex !== null && targetVertex !== dragStartVertex) {
+                    graph.addEdge(dragStartVertex, targetVertex);
+                }
+                
+                dragCompleted = true;
+                setTimeout(() => { dragCompleted = false; }, 100);
+                
+                isDragging = false;
+                dragStartVertex = null;
+                selectedVertex = null;
+                drawGraph();
+                event.preventDefault();
+            }
+        }
+
+        function handleRightClick(event) {
+            event.preventDefault();
+            
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            
+            const clickedVertex = getVertexAt(x, y);
+            
+            if (clickedVertex !== null) {
+                graph.removeVertex(clickedVertex);
+                selectedVertex = null;
+                drawGraph();
+            } else {
+                const clickedEdge = getEdgeAt(x, y);
+                if (clickedEdge !== null) {
+                    graph.removeEdge(clickedEdge.v1, clickedEdge.v2);
                     drawGraph();
                 }
             }
@@ -603,15 +846,77 @@
             return null;
         }
 
-        function drawGraph() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        function getEdgeAt(x, y) {
+            const threshold = 8;
             
-            // Draw edges
-            ctx.strokeStyle = '#6c757d';
-            ctx.lineWidth = 2;
             for (let edge of graph.edges) {
                 const v1 = graph.vertices.get(edge.v1);
                 const v2 = graph.vertices.get(edge.v2);
+                
+                const dist = distanceToLineSegment(x, y, v1.x, v1.y, v2.x, v2.y);
+                
+                if (dist <= threshold) {
+                    return edge;
+                }
+            }
+            return null;
+        }
+
+        function distanceToLineSegment(px, py, x1, y1, x2, y2) {
+            const dx = x2 - x1;
+            const dy = y2 - y1;
+            const length = Math.sqrt(dx * dx + dy * dy);
+            
+            if (length === 0) return Math.sqrt((px - x1) ** 2 + (py - y1) ** 2);
+            
+            const t = Math.max(0, Math.min(1, ((px - x1) * dx + (py - y1) * dy) / (length * length)));
+            const projX = x1 + t * dx;
+            const projY = y1 + t * dy;
+            
+            return Math.sqrt((px - projX) ** 2 + (py - projY) ** 2);
+        }
+
+        function drawGraph() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Gambar semua edge terlebih dahulu
+            for (let edge of graph.edges) {
+                const v1 = graph.vertices.get(edge.v1);
+                const v2 = graph.vertices.get(edge.v2);
+                
+                // Cek apakah edge ini adalah path hijau permanen
+                const isPermanentGreen = permanentGreenPaths.some(path => 
+                    (path.from === edge.v1 && path.to === edge.v2) ||
+                    (path.from === edge.v2 && path.to === edge.v1)
+                );
+                
+                const isHovered = hoveredEdge && 
+                    ((hoveredEdge.v1 === edge.v1 && hoveredEdge.v2 === edge.v2) ||
+                    (hoveredEdge.v1 === edge.v2 && hoveredEdge.v2 === edge.v1));
+                
+                if (isPermanentGreen) {
+                    // Edge hijau permanen
+                    ctx.shadowColor = 'rgba(40, 167, 69, 0.3)';
+                    ctx.shadowBlur = 8;
+                    ctx.shadowOffsetX = 0;
+                    ctx.shadowOffsetY = 0;
+                    ctx.strokeStyle = '#28a745';
+                    ctx.lineWidth = 4;
+                } else if (isHovered) {
+                    ctx.shadowColor = 'rgba(220, 53, 69, 0.5)';
+                    ctx.shadowBlur = 10;
+                    ctx.shadowOffsetX = 2;
+                    ctx.shadowOffsetY = 2;
+                    ctx.strokeStyle = '#dc3545';
+                    ctx.lineWidth = 4;
+                } else {
+                    ctx.shadowColor = 'transparent';
+                    ctx.shadowBlur = 0;
+                    ctx.shadowOffsetX = 0;
+                    ctx.shadowOffsetY = 0;
+                    ctx.strokeStyle = '#6c757d';
+                    ctx.lineWidth = 2;
+                }
                 
                 ctx.beginPath();
                 ctx.moveTo(v1.x, v1.y);
@@ -619,25 +924,49 @@
                 ctx.stroke();
             }
             
-            // Draw vertices
+            // Reset shadow untuk vertex
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+            
+            // Gambar vertex
             for (let [id, vertex] of graph.vertices) {
-                // Vertex circle
-                ctx.fillStyle = selectedVertex === id ? '#dc3545' : '#667eea';
+                const isHovered = hoveredVertex === id;
+                const isSelected = selectedVertex === id;
+                const isPermanentGreen = permanentGreenVertices.has(id);
+                
+                if (isPermanentGreen) {
+                    // Vertex hijau permanen
+                    ctx.fillStyle = '#28a745';
+                } else if (isSelected) {
+                    ctx.fillStyle = '#dc3545';
+                } else if (isHovered) {
+                    ctx.fillStyle = '#28a745';
+                } else {
+                    ctx.fillStyle = '#667eea';
+                }
+                
                 ctx.beginPath();
                 ctx.arc(vertex.x, vertex.y, 20, 0, 2 * Math.PI);
                 ctx.fill();
                 
-                // Vertex border
-                ctx.strokeStyle = '#333';
-                ctx.lineWidth = 2;
+                ctx.strokeStyle = isPermanentGreen ? '#1e7e34' : '#333';
+                ctx.lineWidth = isPermanentGreen ? 3 : 2;
                 ctx.stroke();
                 
-                // Vertex label
                 ctx.fillStyle = 'white';
                 ctx.font = 'bold 14px Arial';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillText(vertex.label, vertex.x, vertex.y);
+                
+                // Tambahkan checkmark untuk vertex hijau permanen
+                if (isPermanentGreen) {
+                    ctx.fillStyle = '#fff';
+                    ctx.font = 'bold 10px Arial';
+                    ctx.fillText('✓', vertex.x + 12, vertex.y - 12);
+                }
             }
         }
 
@@ -649,7 +978,6 @@
             const centerY = canvas.height / 2;
             const radius = Math.min(centerX, centerY) - 50;
             
-            // Add vertices in circle
             for (let i = 0; i < n; i++) {
                 const angle = (2 * Math.PI * i) / n;
                 const x = centerX + radius * Math.cos(angle);
@@ -657,7 +985,6 @@
                 graph.addVertex(x, y, i);
             }
             
-            // Add all possible edges
             for (let i = 0; i < n; i++) {
                 for (let j = i + 1; j < n; j++) {
                     graph.addEdge(i, j);
@@ -675,7 +1002,6 @@
             const centerY = canvas.height / 2;
             const radius = Math.min(centerX, centerY) - 50;
             
-            // Add vertices in circle
             for (let i = 0; i < n; i++) {
                 const angle = (2 * Math.PI * i) / n;
                 const x = centerX + radius * Math.cos(angle);
@@ -683,7 +1009,6 @@
                 graph.addVertex(x, y, i);
             }
             
-            // Add cycle edges
             for (let i = 0; i < n; i++) {
                 graph.addEdge(i, (i + 1) % n);
             }
@@ -700,13 +1025,11 @@
             const y = canvas.height / 2;
             const stepX = (endX - startX) / (n - 1);
             
-            // Add vertices in line
             for (let i = 0; i < n; i++) {
                 const x = startX + i * stepX;
                 graph.addVertex(x, y, i);
             }
             
-            // Add path edges
             for (let i = 0; i < n - 1; i++) {
                 graph.addEdge(i, i + 1);
             }
@@ -718,14 +1041,12 @@
             const n = parseInt(document.getElementById('numVertices').value);
             graph.clear();
             
-            // Add random vertices
             for (let i = 0; i < n; i++) {
                 const x = 50 + Math.random() * (canvas.width - 100);
                 const y = 50 + Math.random() * (canvas.height - 100);
                 graph.addVertex(x, y, i);
             }
             
-            // Add random edges
             const maxEdges = n * (n - 1) / 2;
             const numEdges = Math.floor(Math.random() * maxEdges * 0.6) + n - 1;
             
@@ -736,20 +1057,32 @@
             }
             
             drawGraph();
+            updateCanvasCursor();
+            clearPermanentPaths();
+            clearResults();
         }
 
         function clearGraph() {
             graph.clear();
             selectedVertex = null;
+            
+            // TAMBAHKAN baris ini:
+            clearPermanentPaths();
+            
             drawGraph();
             clearResults();
+            updateCanvasCursor();
         }
 
         function clearResults() {
-            document.getElementById('eulerStatus').innerHTML = '';
-            document.getElementById('eulerResult').innerHTML = '';
-            document.getElementById('hamiltonStatus').innerHTML = '';
-            document.getElementById('hamiltonResult').innerHTML = '';
+            document.getElementById('eulerPathStatus').innerHTML = '';
+            document.getElementById('eulerPathResult').innerHTML = '';
+            document.getElementById('eulerCircuitStatus').innerHTML = '';
+            document.getElementById('eulerCircuitResult').innerHTML = '';
+            document.getElementById('hamiltonPathStatus').innerHTML = '';
+            document.getElementById('hamiltonPathResult').innerHTML = '';
+            document.getElementById('hamiltonCircuitStatus').innerHTML = '';
+            document.getElementById('hamiltonCircuitResult').innerHTML = '';
             document.getElementById('graphInfo').innerHTML = '';
             document.getElementById('matrixDisplay').innerHTML = '';
         }
@@ -762,59 +1095,79 @@
 
             const analyzer = new GraphAnalyzer(graph);
             
-            // Analisis Euler
             const eulerInfo = analyzer.hasEulerPath();
             const eulerPath = analyzer.findEulerPath();
-            
-            let eulerStatus = '';
-            let eulerResult = '';
-            
-            if (eulerInfo.hasCircuit) {
-                eulerStatus = '<div class="status success">✅ Memiliki Sirkuit Euler</div>';
-                eulerResult = eulerPath ? `Sirkuit Euler: ${eulerPath.join(' → ')}` : 'Sirkuit ditemukan';
-            } else if (eulerInfo.hasPath) {
-                eulerStatus = '<div class="status warning">⚠️ Memiliki Lintasan Euler (bukan sirkuit)</div>';
-                eulerResult = eulerPath ? `Lintasan Euler: ${eulerPath.join(' → ')}` : 'Lintasan ditemukan';
+
+            if (eulerInfo.hasPath && !eulerInfo.hasCircuit) {
+                document.getElementById('eulerPathStatus').innerHTML = '<div class="status success">✅ Memiliki Lintasan Euler</div>';
+                document.getElementById('eulerPathResult').innerHTML = eulerPath ? 
+                `<div class="path-text">Lintasan Euler: ${eulerPath.join(' → ')}</div>
+                <button class="animate-btn" onclick="animatePathfinding('euler-path', ${JSON.stringify(eulerPath)})">🎬 Animasi</button>` : 
+                '<div class="path-text">Lintasan ditemukan</div>';
             } else {
-                eulerStatus = '<div class="status error">❌ Tidak memiliki Lintasan/Sirkuit Euler</div>';
-                eulerResult = `Jumlah Titik/Node dengan derajat ganjil: ${eulerInfo.oddVertices}`;
+                document.getElementById('eulerPathStatus').innerHTML = '<div class="status error">❌ Tidak memiliki Lintasan Euler</div>';
+                document.getElementById('eulerPathResult').innerHTML = eulerInfo.oddVertices > 2 ? 
+                    `Jumlah vertex berderajat ganjil: ${eulerInfo.oddVertices} (harus tepat 2)` : 
+                    'Semua vertex berderajat genap (ini adalah sirkuit)';
             }
-            
-            // Analisis Hamilton
-            const hamiltonInfo = analyzer.hasHamiltonPath();
+
+            if (eulerInfo.hasCircuit) {
+                document.getElementById('eulerCircuitStatus').innerHTML = '<div class="status success">✅ Memiliki Sirkuit Euler</div>';
+                document.getElementById('eulerCircuitResult').innerHTML = eulerPath ? 
+                `<div class="path-text">Sirkuit Euler: ${eulerPath.join(' → ')}</div>
+                <button class="animate-btn" onclick="animatePathfinding('euler-circuit', ${JSON.stringify(eulerPath)})">🎬 Animasi</button>` : 
+                '<div class="path-text">Sirkuit ditemukan</div>';
+            } else {
+                document.getElementById('eulerCircuitStatus').innerHTML = '<div class="status error">❌ Tidak memiliki Sirkuit Euler</div>';
+                document.getElementById('eulerCircuitResult').innerHTML = eulerInfo.oddVertices === 0 ? 
+                    'Graph tidak terhubung' : 
+                    `Jumlah vertex berderajat ganjil: ${eulerInfo.oddVertices} (harus 0)`;
+            }
+
             const hamiltonPath = analyzer.findHamiltonPathBacktrack(Array.from(graph.vertices.keys()));
             const hamiltonCircuit = analyzer.findHamiltonCircuitBacktrack(Array.from(graph.vertices.keys()));
-            
-            let hamiltonStatus = '';
-            let hamiltonResult = '';
-            
-            if (hamiltonCircuit) {
-                hamiltonStatus = '<div class="status success">✅ Memiliki Sirkuit Hamilton</div>';
-                hamiltonResult = `Sirkuit Hamilton: ${hamiltonCircuit.join(' → ')}`;
-            } else if (hamiltonPath) {
-                hamiltonStatus = '<div class="status warning">⚠️ Memiliki Lintasan Hamilton (bukan sirkuit)</div>';
-                hamiltonResult = `Lintasan Hamilton: ${hamiltonPath.join(' → ')}`;
+
+            if (hamiltonPath && !hamiltonCircuit) {
+                document.getElementById('hamiltonPathStatus').innerHTML = '<div class="status success">✅ Memiliki Lintasan Hamilton</div>';
+                document.getElementById('hamiltonPathResult').innerHTML = 
+                `<div class="path-text">Lintasan Hamilton: ${hamiltonPath.join(' → ')}</div>
+                <button class="animate-btn" onclick="animatePathfinding('hamilton-path', ${JSON.stringify(hamiltonPath)})">🎬 Animasi</button>`;
+            } else if (!hamiltonPath) {
+                document.getElementById('hamiltonPathStatus').innerHTML = '<div class="status error">❌ Tidak memiliki Lintasan Hamilton</div>';
+                document.getElementById('hamiltonPathResult').innerHTML = 'Tidak ditemukan lintasan yang mengunjungi setiap vertex tepat sekali';
             } else {
-                hamiltonStatus = '<div class="status error">❌ Tidak memiliki Lintasan/Sirkuit Hamilton</div>';
-                hamiltonResult = hamiltonInfo.diracCondition ? 
-                    'Kondisi Graph terpenuhi tapi tidak ditemukan sirkuit' : 
-                    'Kondisi Graph tidak terpenuhi';
+                document.getElementById('hamiltonPathStatus').innerHTML = '<div class="status warning">⚠️ Memiliki Lintasan Hamilton (tapi lebih baik sebagai sirkuit)</div>';
+                document.getElementById('hamiltonPathResult').innerHTML = 
+                    `Lintasan Hamilton: ${hamiltonPath.join(' → ')} <button class="animate-btn" onclick="animatePathfinding('hamilton-path', ${JSON.stringify(hamiltonPath)})">🎬 Animasi</button>`;
+            }
+
+            if (hamiltonCircuit) {
+                document.getElementById('hamiltonCircuitStatus').innerHTML = '<div class="status success">✅ Memiliki Sirkuit Hamilton</div>';
+               document.getElementById('hamiltonCircuitResult').innerHTML = 
+                `<div class="path-text">Sirkuit Hamilton: ${hamiltonCircuit.join(' → ')}</div>
+                <button class="animate-btn" onclick="animatePathfinding('hamilton-circuit', ${JSON.stringify(hamiltonCircuit)})">🎬 Animasi</button>`;
+            } else {
+                document.getElementById('hamiltonCircuitStatus').innerHTML = '<div class="status error">❌ Tidak memiliki Sirkuit Hamilton</div>';
+                const hamiltonInfo = analyzer.hasHamiltonPath();
+                document.getElementById('hamiltonCircuitResult').innerHTML = hamiltonInfo.diracCondition ? 
+                    'Kondisi Dirac terpenuhi tapi tidak ditemukan sirkuit' : 
+                    'Kondisi Dirac tidak terpenuhi untuk sirkuit Hamilton';
             }
             
-            // Info Graph
             const degrees = [];
             for (let vertex of graph.vertices.keys()) {
                 degrees.push(graph.getDegree(vertex));
             }
-            
+
             const graphInfo = `Jumlah Titik/Node: ${graph.vertices.size}
 Jumlah Sisi: ${graph.edges.length}
 Derajat setiap Titik/Node: ${Array.from(graph.vertices.keys()).map(v => `${v}:${graph.getDegree(v)}`).join(', ')}
 Total derajat: ${degrees.reduce((a, b) => a + b, 0)}
 Derajat minimum: ${Math.min(...degrees)}
 Derajat maksimum: ${Math.max(...degrees)}`;
+
+            document.getElementById('graphInfo').innerHTML = graphInfo;
             
-            // Update UI
             document.getElementById('eulerStatus').innerHTML = eulerStatus;
             document.getElementById('eulerResult').innerHTML = eulerResult;
             document.getElementById('hamiltonStatus').innerHTML = hamiltonStatus;
@@ -832,7 +1185,6 @@ Derajat maksimum: ${Math.max(...degrees)}`;
             const n = vertices.length;
             const matrix = Array(n).fill().map(() => Array(n).fill(0));
             
-            // Fill matrix
             for (let edge of graph.edges) {
                 const i = vertices.indexOf(edge.v1);
                 const j = vertices.indexOf(edge.v2);
@@ -840,7 +1192,6 @@ Derajat maksimum: ${Math.max(...degrees)}`;
                 matrix[j][i] = 1;
             }
             
-            // Create HTML table
             let html = '<table style="margin: 0 auto; border-collapse: collapse;">';
             html += '<tr><th style="padding: 5px; border: 1px solid #ccc; background: #f8f9fa;"></th>';
             
@@ -885,17 +1236,14 @@ Derajat maksimum: ${Math.max(...degrees)}`;
                     return;
                 }
                 
-                // Redraw graph
                 drawGraph();
                 
-                // Highlight current edge
                 const currentVertex = pathToAnimate[currentIndex];
                 const nextVertex = pathToAnimate[currentIndex + 1];
                 
                 const v1 = graph.vertices.get(currentVertex);
                 const v2 = graph.vertices.get(nextVertex);
                 
-                // Draw animated edge
                 ctx.strokeStyle = '#dc3545';
                 ctx.lineWidth = 4;
                 ctx.beginPath();
@@ -903,7 +1251,6 @@ Derajat maksimum: ${Math.max(...degrees)}`;
                 ctx.lineTo(v2.x, v2.y);
                 ctx.stroke();
                 
-                // Highlight vertices
                 ctx.fillStyle = '#dc3545';
                 ctx.beginPath();
                 ctx.arc(v1.x, v1.y, 22, 0, 2 * Math.PI);
@@ -912,7 +1259,6 @@ Derajat maksimum: ${Math.max(...degrees)}`;
                 ctx.arc(v2.x, v2.y, 22, 0, 2 * Math.PI);
                 ctx.fill();
                 
-                // Redraw vertex labels
                 ctx.fillStyle = 'white';
                 ctx.font = 'bold 14px Arial';
                 ctx.textAlign = 'center';
@@ -927,21 +1273,356 @@ Derajat maksimum: ${Math.max(...degrees)}`;
             animateStep();
         }
 
-        // Update instructions based on mode
-        document.getElementById('mode').addEventListener('change', function() {
-            const mode = this.value;
-            const instructions = document.getElementById('instructions');
+        function openInstructionsModal() {
+            document.getElementById('instructionsModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeInstructionsModal() {
+            document.getElementById('instructionsModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('instructionsModal');
+            if (event.target === modal) {
+                closeInstructionsModal();
+            }
+        }
+
+        function updateCanvasCursor() {
+            canvas.classList.remove('empty', 'has-content', 'hovering-edge');
             
-            switch(mode) {
-                case 'add_vertex':
-                    instructions.textContent = 'Klik untuk menambah vertex';
-                    break;
-                case 'add_edge':
-                    instructions.textContent = 'Klik dua vertex untuk menambah edge';
-                    break;
-                case 'remove':
-                    instructions.textContent = 'Klik vertex untuk menghapus';
-                    break;
+            if (graph.vertices.size === 0 && graph.edges.length === 0) {
+                canvas.classList.add('empty');
+            } else {
+                canvas.classList.add('has-content');
+                
+                if (hoveredEdge) {
+                    canvas.style.cursor = 'pointer';
+                } else if (hoveredVertex) {
+                    canvas.style.cursor = 'grab';
+                } else {
+                    canvas.style.cursor = 'crosshair';
+                }
+            }
+        }
+        function animatePathfinding(pathType, correctPath) {
+            if (pathAnimationRunning) {
+                alert('Animasi sedang berjalan!');
+                return;
+            }
+            
+            // RESET permanent paths setiap kali animasi dimulai
+            permanentGreenPaths = [];
+            permanentGreenVertices.clear();
+            
+            pathAnimationRunning = true;
+            
+            const animateButtons = document.querySelectorAll('.animate-btn');
+            animateButtons.forEach(btn => btn.disabled = true);
+            
+            const vertices = Array.from(graph.vertices.keys());
+            const adj = graph.getAdjacencyList();
+            
+            const explorationSequence = generateExplorationPaths(correctPath, adj, vertices);
+            
+            let sequenceIndex = 0;
+            let currentPath = [];
+            let visitedVertices = new Set();
+            
+            const animateExploration = () => {
+                if (sequenceIndex >= explorationSequence.length) {
+                    pathAnimationRunning = false;
+                    animateButtons.forEach(btn => btn.disabled = false);
+                    drawGraph();
+                    showCompletionMessage(pathType);
+                    return;
+                }
+                
+                const step = explorationSequence[sequenceIndex];
+                
+                if (step.action === 'explore') {
+                    exploreWrongPath(step.from, step.to, step.isCorrect);
+                } else if (step.action === 'backtrack') {
+                    backtrackAnimation(step.from, step.to);
+                } else if (step.action === 'correct') {
+                    addCorrectPath(step.from, step.to);
+                    
+                    // TAMBAHKAN path ke permanent green paths
+                    permanentGreenPaths.push({ from: step.from, to: step.to });
+                    permanentGreenVertices.add(step.from);
+                    permanentGreenVertices.add(step.to);
+                    
+                    visitedVertices.add(step.from);
+                    visitedVertices.add(step.to);
+                }
+                
+                sequenceIndex++;
+                setTimeout(animateExploration, animationSpeed);
+            };
+            
+            drawGraph();
+            setTimeout(animateExploration, 500);
+        }
+
+        function generateExplorationPaths(correctPath, adj, vertices) {
+            const sequence = [];
+            const visited = new Set();
+            
+            for (let i = 0; i < correctPath.length - 1; i++) {
+                const current = correctPath[i];
+                const next = correctPath[i + 1];
+                const neighbors = adj.get(current);
+                
+                const wrongNeighbors = neighbors.filter(n => n !== next && !visited.has(n));
+                const numWrongExplore = Math.min(2, wrongNeighbors.length);
+                
+                for (let j = 0; j < numWrongExplore; j++) {
+                    const wrongNext = wrongNeighbors[j];
+                    sequence.push({ action: 'explore', from: current, to: wrongNext, isCorrect: false });
+                    sequence.push({ action: 'backtrack', from: wrongNext, to: current });
+                }
+                
+                sequence.push({ action: 'correct', from: current, to: next });
+                visited.add(current);
+            }
+            
+            return sequence;
+        }
+
+        function exploreWrongPath(from, to) {
+            drawGraph();
+            
+            const fromVertex = graph.vertices.get(from);
+            const toVertex = graph.vertices.get(to);
+            
+            ctx.strokeStyle = '#ff6b6b';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([8, 4]);
+            ctx.beginPath();
+            ctx.moveTo(fromVertex.x, fromVertex.y);
+            ctx.lineTo(toVertex.x, toVertex.y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            ctx.fillStyle = '#ff6b6b';
+            ctx.beginPath();
+            ctx.arc(fromVertex.x, fromVertex.y, 25, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(toVertex.x, toVertex.y, 25, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 20px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('?', toVertex.x, toVertex.y);
+            ctx.fillText(fromVertex.label, fromVertex.x, fromVertex.y);
+        }
+
+        function backtrackAnimation(from, to) {
+            drawGraph();
+            
+            const fromVertex = graph.vertices.get(from);
+            const toVertex = graph.vertices.get(to);
+            
+            ctx.strokeStyle = '#ffc107';
+            ctx.lineWidth = 4;
+            ctx.setLineDash([]);
+            
+            const midX = (fromVertex.x + toVertex.x) / 2;
+            const midY = (fromVertex.y + toVertex.y) / 2 - 30;
+            
+            ctx.beginPath();
+            ctx.moveTo(fromVertex.x, fromVertex.y);
+            ctx.quadraticCurveTo(midX, midY, toVertex.x, toVertex.y);
+            ctx.stroke();
+            
+            const angle = Math.atan2(toVertex.y - midY, toVertex.x - midX);
+            ctx.fillStyle = '#ffc107';
+            ctx.beginPath();
+            ctx.moveTo(toVertex.x, toVertex.y);
+            ctx.lineTo(toVertex.x - 10 * Math.cos(angle - Math.PI/6), toVertex.y - 10 * Math.sin(angle - Math.PI/6));
+            ctx.lineTo(toVertex.x - 10 * Math.cos(angle + Math.PI/6), toVertex.y - 10 * Math.sin(angle + Math.PI/6));
+            ctx.closePath();
+            ctx.fill();
+            
+            ctx.fillStyle = '#ffc107';
+            ctx.beginPath();
+            ctx.arc(toVertex.x, toVertex.y, 25, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 14px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(toVertex.label, toVertex.x, toVertex.y);
+        }
+
+        function addCorrectPath(from, to) {
+            // Gambar graph dengan path hijau permanen yang sudah ada
+            drawGraph();
+            
+            const fromVertex = graph.vertices.get(from);
+            const toVertex = graph.vertices.get(to);
+            
+            // Gambar path baru yang sedang ditambahkan dengan efek khusus
+            ctx.strokeStyle = '#28a745';
+            ctx.lineWidth = 5;
+            ctx.setLineDash([]);
+            ctx.shadowColor = 'rgba(40, 167, 69, 0.5)';
+            ctx.shadowBlur = 15;
+            ctx.beginPath();
+            ctx.moveTo(fromVertex.x, fromVertex.y);
+            ctx.lineTo(toVertex.x, toVertex.y);
+            ctx.stroke();
+            
+            // Reset shadow
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+            
+            // Gambar vertex dengan efek khusus untuk yang baru ditambahkan
+            ctx.fillStyle = '#28a745';
+            ctx.beginPath();
+            ctx.arc(fromVertex.x, fromVertex.y, 25, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(toVertex.x, toVertex.y, 25, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Border vertex
+            ctx.strokeStyle = '#1e7e34';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(fromVertex.x, fromVertex.y, 25, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(toVertex.x, toVertex.y, 25, 0, 2 * Math.PI);
+            ctx.stroke();
+            
+            // Label vertex
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 16px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(fromVertex.label, fromVertex.x, fromVertex.y);
+            ctx.fillText(toVertex.label, toVertex.x, toVertex.y);
+            
+            // Checkmark untuk menandai sebagai benar
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 12px Arial';
+            ctx.fillText('✓', toVertex.x + 15, toVertex.y - 15);
+        }
+
+        function clearPermanentPaths() {
+            permanentGreenPaths = [];
+            permanentGreenVertices.clear();
+            drawGraph();
+        }
+
+        function showCompletionMessage(pathType) {
+            const messages = {
+                'euler-path': 'Lintasan Euler berhasil ditemukan! 🎉',
+                'euler-circuit': 'Sirkuit Euler berhasil ditemukan! 🎉',
+                'hamilton-path': 'Lintasan Hamilton berhasil ditemukan! 🎉',
+                'hamilton-circuit': 'Sirkuit Hamilton berhasil ditemukan! 🎉'
+            };
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(45deg, #28a745, #20c997);
+                color: white;
+                padding: 20px 30px;
+                border-radius: 15px;
+                font-size: 18px;
+                font-weight: bold;
+                box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+                z-index: 1000;
+                animation: successPulse 0.6s ease-out;
+            `;
+            
+            messageDiv.textContent = messages[pathType];
+            document.body.appendChild(messageDiv);
+            
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes successPulse {
+                    0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+                    50% { transform: translate(-50%, -50%) scale(1.1); }
+                    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            setTimeout(() => {
+                document.body.removeChild(messageDiv);
+                document.head.removeChild(style);
+            }, 3000);
+        }
+
+        function openTheoryModal(type) {
+            const modalIds = {
+                'euler': 'eulerTheoryModal',
+                'hamilton': 'hamiltonTheoryModal',
+                'graph-basics': 'graphBasicsTheoryModal',
+                'differences': 'differencesTheoryModal',
+                'applications': 'applicationsTheoryModal'
+            };
+            
+            const modalId = modalIds[type];
+            if (modalId) {
+                document.getElementById(modalId).style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeTheoryModal(type) {
+            const modalIds = {
+                'euler': 'eulerTheoryModal',
+                'hamilton': 'hamiltonTheoryModal',
+                'graph-basics': 'graphBasicsTheoryModal',
+                'differences': 'differencesTheoryModal',
+                'applications': 'applicationsTheoryModal'
+            };
+            
+            const modalId = modalIds[type];
+            if (modalId) {
+                document.getElementById(modalId).style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modals = ['eulerTheoryModal', 'hamiltonTheoryModal', 'graphBasicsTheoryModal', 'differencesTheoryModal', 'applicationsTheoryModal'];
+            
+            modals.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modals = ['eulerTheoryModal', 'hamiltonTheoryModal', 'graphBasicsTheoryModal', 'differencesTheoryModal', 'applicationsTheoryModal'];
+                
+                modals.forEach(modalId => {
+                    const modal = document.getElementById(modalId);
+                    if (modal.style.display === 'block') {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
             }
         });
     </script>
