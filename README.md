@@ -4,7 +4,7 @@ Aplikasi web interaktif untuk memahami dan menganalisis konsep lintasan serta si
 
 ## 🚀 Demo Langsung
 
-**[🌐 Akses Aplikasi](https://11220080-mochshadamj.github.io/teorigraph/)**
+**[🌐 Akses Aplikasi](https://mochshadamj.github.io/teorigraph/)**
 
 ## 📋 Deskripsi
 
